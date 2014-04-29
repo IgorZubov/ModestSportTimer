@@ -213,3 +213,5 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+gen/spb/progress/bar/sporttimer/BuildConfig.java
+gen/spb/progress/bar/sporttimer/R.java

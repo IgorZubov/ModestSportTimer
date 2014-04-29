@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:CountdownView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_blue"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:keepScreenOn="true">
+	
+    <RelativeLayout
+        android:id="@+id/rl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="70dp">
+        
+    <spb.progress.bar.sporttimer.CountdownView
+        android:id="@+id/timerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        CountdownView:outerWheelWidth="10dp"
+        CountdownView:sectorLineWidth="1dp" />
+    
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/txt_digits"
+        android:text="Work now!"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+     <TextView
+        android:id="@+id/txt_digits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/rl_container"
+        android:layout_marginBottom="30dp"
+        android:text="15"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>

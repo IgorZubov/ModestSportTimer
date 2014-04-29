@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sport Timer</string>
+    <string name="str_rounds">Rounds</string>
+    <string name="str_round_time">Round time in sec</string>
+    <string name="str_rest_time">Rest time in sec</string>
+</resources>

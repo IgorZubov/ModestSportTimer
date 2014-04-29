@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CountdownView">
+        <attr name="sectorLineWidth" format="dimension"/>
+        <attr name="outerWheelWidth" format="dimension"/>
+    </declare-styleable>
+</resources>

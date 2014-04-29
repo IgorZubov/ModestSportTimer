@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="gray_blue">#defbff</color>
+	<color name="active_state">#4bb7c4</color>
+	<color name="pause_state">#bdbbbe</color>
+	<color name="pointer">#438a90</color>
+	<color name="sector_remaining">#63dcef</color>
+	<color name="sector_done">#e7e7e7</color>
+	<color name="sector_divider">#7effffff</color>    
+</resources>
