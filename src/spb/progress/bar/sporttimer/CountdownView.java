@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -41,17 +40,16 @@ public class CountdownView extends View {
 	private int m_nCircleCenterY;
 	private int m_nLineWidth = 2;
 	private int m_nOuterWheelWidth = 10;
-	private boolean m_bTimerStop = false;
+	private boolean m_bTimerStoped = true;
 
 	private float m_fAnimationStep = 0;
 	private float m_fCurrentProgress = 0;
-	private long m_lExpectedFinishTime;
 	private long m_lLastMeasuredTime = 0;
 	
 	public CountdownView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		parseAttributes(context.obtainStyledAttributes(attrs, R.styleable.CountdownView));
-		m_bTimerStop = false;
+		m_bTimerStoped = true;
 		initView();
 		getTimerCircleSize(context);
 	}
@@ -59,14 +57,14 @@ public class CountdownView extends View {
 	public CountdownView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		parseAttributes(context.obtainStyledAttributes(attrs, R.styleable.CountdownView));
-		m_bTimerStop = false;
+		m_bTimerStoped = true;
 		initView();
 		getTimerCircleSize(context);
 	}
 
 	public CountdownView(Context context) {
 		super(context);
-		m_bTimerStop = false;
+		m_bTimerStoped = true;
 		initView();
 		getTimerCircleSize(context);
 	}
@@ -92,12 +90,11 @@ public class CountdownView extends View {
 			public void handleMessage(Message msg) {
 				invalidate();
 				long currentTime = System.currentTimeMillis();
-				if (m_lExpectedFinishTime >= currentTime && !m_bTimerStop) {
+				if (!m_bTimerStoped) {
 					m_fCurrentProgress = m_fCurrentProgress - (m_fAnimationStep*(currentTime - m_lLastMeasuredTime));
 					m_lLastMeasuredTime = System.currentTimeMillis();
-					Log.d("COUNT", "now in: " + m_lLastMeasuredTime);
-					m_animationHandler.sendEmptyMessage(0);
 				}
+				m_animationHandler.sendEmptyMessageDelayed(0, 0);
 			};
 		};
 	}
@@ -158,9 +155,11 @@ public class CountdownView extends View {
 	public void startAnimateTimerExercise(long milliSeconds) {
 		m_fAnimationStep = 360f / milliSeconds;
 		m_lLastMeasuredTime = System.currentTimeMillis();
-		m_lExpectedFinishTime = m_lLastMeasuredTime + milliSeconds;
 		m_fCurrentProgress = 0;
-		m_animationHandler.sendEmptyMessage(0);
+		if (m_bTimerStoped) {
+			m_bTimerStoped = false;
+			m_animationHandler.sendEmptyMessage(0);
+		}
 	}
 	
 	@Override
@@ -219,7 +218,7 @@ public class CountdownView extends View {
 	}
 	
 	public void stopTimer() {
-//		m_animationHandler.disable();
+		m_bTimerStoped = true;
 	}
 
 	public void setRepeatsAmount(int repeatsAmout) {

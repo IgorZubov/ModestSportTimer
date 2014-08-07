@@ -36,6 +36,7 @@ public class CountdownActivity extends Activity {
 		}
 		m_countdownView = (CountdownView) findViewById(R.id.timerView);
 		m_txtTimeLeft = (TextView) findViewById(R.id.txt_digits);
+		m_txtTimeLeft.setText(String.valueOf(roundDuration/MILLISEC_IN_SEC));
 		m_txtRoundName = (TextView) findViewById(R.id.txt_name);
 		m_countdownView.setRepeatsAmount(roundsAmount);
 		m_timer  = new TimerTask(roundsAmount, roundDuration, restDuration);
@@ -46,15 +47,19 @@ public class CountdownActivity extends Activity {
 			@Override
 			public void onTick(long millisUntilFinished) {
 				if (millisUntilFinished < nBeepTimeMillisec) {
-					makeBeep(false);
-					nBeepTimeMillisec -= DEFAULT_BEEP_TIME_DELTA;
+					if (m_ShortBeep != null) {
+						m_ShortBeep.start();
+						nBeepTimeMillisec -= DEFAULT_BEEP_TIME_DELTA;
+					}
 				}
 			}
 			
 			@Override
 			public void onFinish() {
-				makeBeep(true);
-				m_timer.startTimer();
+				if (m_LongBeep != null) {
+					m_LongBeep.start();
+					m_timer.startTimer();
+				}
 			}
 		};
 		delayBeforeFirstStart.start();	
@@ -70,26 +75,10 @@ public class CountdownActivity extends Activity {
 		m_countdownView.stopTimer();
 		m_timer.stopTimers();
 		m_LongBeep.release();
+		m_LongBeep = null;
 		m_ShortBeep.release();
+		m_ShortBeep = null;
 		super.onDestroy();
-	}
-	
-	public void makeBeep(final boolean longBeep) {
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					if (longBeep) {
-						m_LongBeep.start();
-					} else {
-						m_ShortBeep.start();
-					}
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		t.start();
 	}
 	
 	private class TimerTask {
@@ -122,40 +111,38 @@ public class CountdownActivity extends Activity {
 			m_Timer.start();
 		}
 		
-		private class RepeatCountdownTimer extends CountDownTimer {
-			
-			private void tick(long millisUntilFinished, int currentBeepTimeMillisec) {
-				if (m_bStopTimer)
-					return;
-				if (millisUntilFinished < currentBeepTimeMillisec && !m_bOnlyInitialBeep) {
-					makeBeep(false);
-					currentBeepTimeMillisec -= DEFAULT_BEEP_TIME_DELTA;
-				}
-			}
-			
+		private class RepeatCountdownTimer extends CountDownTimer {			
 			
 			public RepeatCountdownTimer(long millisInFuture, long countDownInterval) {
 				super(millisInFuture, countDownInterval);
 				//Here we're setting up pause count down. Ticks for active counting are below.
-				m_pauseTimer = new CountDownTimer(m_nRestDuration, countDownInterval) {
-					int currentBeepTimeMillisec = DEFAULT_BEEP_TIME_BEFORE_END;
-					
+				m_pauseTimer = new CountDownTimer(m_nRestDuration, countDownInterval) {					
 					@Override
 					public void onTick(long millisUntilFinished) {
 						m_txtTimeLeft.setText(String.valueOf((millisUntilFinished / MILLISEC_IN_SEC + 1)));
-						tick(millisUntilFinished, currentBeepTimeMillisec);
+						tick(millisUntilFinished);
 					}
 					
 					@Override
 					public void onFinish() {
 						if (m_bStopTimer)
 							return;
-						currentBeepTimeMillisec = DEFAULT_BEEP_TIME_BEFORE_END;
-						makeBeep(true);
+						m_nInternalBeepTimeMillisec = DEFAULT_BEEP_TIME_BEFORE_END;
+						m_LongBeep.start();
 						m_txtRoundName.setText("Work now!");
 						startTimer();
 					}
 				};
+				//Until here
+			}
+			
+			private void tick(long millisUntilFinished) {
+				if (m_bStopTimer)
+					return;
+				if (millisUntilFinished < m_nInternalBeepTimeMillisec && !m_bOnlyInitialBeep) {
+					m_ShortBeep.start();
+					m_nInternalBeepTimeMillisec -= DEFAULT_BEEP_TIME_DELTA;
+				}
 			}
 
 			public void cancelPauseTimer() {
@@ -165,14 +152,14 @@ public class CountdownActivity extends Activity {
 			@Override
 			public void onTick(long millisUntilFinished) {
 				m_txtTimeLeft.setText(String.valueOf((millisUntilFinished / MILLISEC_IN_SEC + 1)));
-				tick(millisUntilFinished, m_nInternalBeepTimeMillisec);
+				tick(millisUntilFinished);
 			}
 			
 			@Override
 			public void onFinish() {
 				if (m_bStopTimer)
 					return;
-				makeBeep(true);
+				m_LongBeep.start();
 				m_nInternalBeepTimeMillisec = DEFAULT_BEEP_TIME_BEFORE_END;
 				m_nRoundsAmount--;
 				if (m_nRoundsAmount > 0) {
@@ -181,7 +168,10 @@ public class CountdownActivity extends Activity {
 					m_pauseTimer.start();
 					m_countdownView.startAnimateTimerExercise(m_nRestDuration);
 				} else {
+					m_countdownView.stopTimer();
 					m_countdownView.setPauseState(true);
+					m_txtRoundName.setText("Done!");
+					m_txtTimeLeft.setText("");
 				}
 			}
 		}
