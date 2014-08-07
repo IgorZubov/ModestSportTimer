@@ -40,7 +40,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:text="@string/str_round_time"
-                android:textSize="18sp" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
                 android:id="@+id/edt_pause_duration"
@@ -86,7 +86,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:text="@string/str_rest_time"
-                android:textSize="18sp" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/tv_repeat_amounts"
@@ -96,8 +96,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:text="@string/str_rounds"
-                android:textSize="18sp"
-                android:typeface="normal" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <Button
                 android:id="@+id/btn_go"

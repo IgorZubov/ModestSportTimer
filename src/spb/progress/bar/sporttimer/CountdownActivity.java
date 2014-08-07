@@ -2,6 +2,7 @@ package spb.progress.bar.sporttimer;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -37,7 +38,9 @@ public class CountdownActivity extends Activity {
 		m_countdownView = (CountdownView) findViewById(R.id.timerView);
 		m_txtTimeLeft = (TextView) findViewById(R.id.txt_digits);
 		m_txtTimeLeft.setText(String.valueOf(roundDuration/MILLISEC_IN_SEC));
+		m_txtTimeLeft.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Thin.ttf"));
 		m_txtRoundName = (TextView) findViewById(R.id.txt_name);
+		m_txtRoundName.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Thin.ttf"));
 		m_countdownView.setRepeatsAmount(roundsAmount);
 		m_timer  = new TimerTask(roundsAmount, roundDuration, restDuration);
 		

@@ -3,10 +3,12 @@ package spb.progress.bar.sporttimer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SportTimerActivity extends Activity {
@@ -19,15 +21,26 @@ public class SportTimerActivity extends Activity {
 	private Button m_btnGo;
 	private EditText m_txtRounds;
 	private EditText m_txtRoundDuration;
-	private EditText m_txtRestDuration; 
+	private EditText m_txtRestDuration;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sport_timer);
 		m_txtRounds = (EditText) findViewById(R.id.edt_repeat_amounts);
+		m_txtRounds.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Thin.ttf"));
 		m_txtRoundDuration = (EditText) findViewById(R.id.edt_repeat_duration);
+		m_txtRoundDuration.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Thin.ttf"));
 		m_txtRestDuration = (EditText) findViewById(R.id.edt_pause_duration);
+		m_txtRestDuration.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Thin.ttf"));
+		
+		TextView repeatDuration = (TextView) findViewById(R.id.tv_repeat_duration);
+		repeatDuration.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Thin.ttf"));
+		TextView pauseDuration = (TextView) findViewById(R.id.tv_pause_duration);
+		pauseDuration.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Thin.ttf"));
+		TextView repeatAmounts = (TextView) findViewById(R.id.tv_repeat_amounts);
+		repeatAmounts.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Thin.ttf"));
+		
 		m_btnGo = (Button) findViewById(R.id.btn_go);
 		m_btnGo.setOnClickListener(new ButtonGoOnClickListener());
 	}
