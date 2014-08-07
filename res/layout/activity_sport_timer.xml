@@ -8,11 +8,12 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="520dp" >
+            android:layout_height="match_parent" 
+            android:layout_gravity="center_vertical">
 
             <EditText
                 android:id="@+id/edt_repeat_duration"
@@ -22,7 +23,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
-                android:layout_marginTop="65dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/bg_edit_text_underline"
                 android:ems="10"
                 android:gravity="center"
@@ -40,7 +41,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:text="@string/str_round_time"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/edt_pause_duration"
@@ -50,7 +51,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
-                android:layout_marginTop="62dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/bg_edit_text_underline"
                 android:ems="10"
                 android:gravity="center"
@@ -68,7 +69,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
-                android:layout_marginTop="62dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/bg_edit_text_underline"
                 android:ems="10"
                 android:gravity="center"
@@ -86,7 +87,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:text="@string/str_rest_time"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_repeat_amounts"
@@ -96,22 +97,25 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:text="@string/str_rounds"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textSize="18sp"
+                android:typeface="normal" />
 
             <Button
                 android:id="@+id/btn_go"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_alignParentBottom="true"
+                android:layout_below="@+id/tv_repeat_amounts"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="65dp"
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
+                android:layout_marginTop="45dp"
                 android:background="@drawable/selector_btn_go"
                 android:text="GO!"
                 android:textSize="22sp"
                 android:typeface="monospace"
                 android:visibility="visible" />
+
         </RelativeLayout>
 
     </ScrollView>
