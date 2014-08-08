@@ -5,15 +5,10 @@
     android:background="@color/gray_blue"
     tools:context=".SportTimerActivity" >
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" 
-            android:layout_gravity="center_vertical">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
 
             <EditText
                 android:id="@+id/edt_repeat_duration"
@@ -23,7 +18,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
-                android:layout_marginTop="40dp"
                 android:background="@drawable/bg_edit_text_underline"
                 android:ems="10"
                 android:gravity="center"
@@ -104,7 +98,6 @@
                 android:id="@+id/btn_go"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_alignParentBottom="true"
                 android:layout_below="@+id/tv_repeat_amounts"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="45dp"
@@ -117,7 +110,5 @@
                 android:visibility="visible" />
 
         </RelativeLayout>
-
-    </ScrollView>
 
 </RelativeLayout>
