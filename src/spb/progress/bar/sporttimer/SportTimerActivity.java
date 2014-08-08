@@ -76,7 +76,7 @@ public class SportTimerActivity extends Activity {
 				m_nRestInSeconds = 0;
 			}
 			if (m_nRoundsAmout == 0 || m_nRoundInSeconds == 0 || m_nRestInSeconds == 0) {
-				Toast.makeText(getApplicationContext(), "Type correct numbers, please", Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.str_incorrect_input), Toast.LENGTH_LONG).show();
 			} else {
 				Intent countDownIntent = new Intent(getApplicationContext(), CountdownActivity.class);
 				countDownIntent.putExtra(ROUNDS_AMOUNT, m_nRoundsAmout);

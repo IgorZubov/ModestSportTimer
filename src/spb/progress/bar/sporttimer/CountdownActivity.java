@@ -132,7 +132,7 @@ public class CountdownActivity extends Activity {
 							return;
 						m_nInternalBeepTimeMillisec = DEFAULT_BEEP_TIME_BEFORE_END;
 						m_LongBeep.start();
-						m_txtRoundName.setText("Work now!");
+						m_txtRoundName.setText(R.string.str_work_now);
 						startTimer();
 					}
 				};
@@ -167,13 +167,13 @@ public class CountdownActivity extends Activity {
 				m_nRoundsAmount--;
 				if (m_nRoundsAmount > 0) {
 					m_countdownView.setPauseState(true);
-					m_txtRoundName.setText("Relax now!");
+					m_txtRoundName.setText(R.string.str_relax_now);
 					m_pauseTimer.start();
 					m_countdownView.startAnimateTimerExercise(m_nRestDuration);
 				} else {
 					m_countdownView.stopTimer();
 					m_countdownView.setPauseState(true);
-					m_txtRoundName.setText("Done!");
+					m_txtRoundName.setText(R.string.str_done);
 					m_txtTimeLeft.setText("");
 				}
 			}

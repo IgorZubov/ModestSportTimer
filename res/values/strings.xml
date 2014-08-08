@@ -4,4 +4,9 @@
     <string name="str_rounds">Rounds</string>
     <string name="str_round_time">Round time in sec</string>
     <string name="str_rest_time">Rest time in sec</string>
+    <string name="str_work_now">Work now!</string>
+    <string name="str_relax_now">Relax now!</string>
+    <string name="str_done">Done!</string>
+    <string name="str_incorrect_input">Please, insert correct numbers</string>
+    <string name="str_go">GO!</string>
 </resources>

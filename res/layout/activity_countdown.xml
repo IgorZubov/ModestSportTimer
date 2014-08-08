@@ -33,7 +33,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
         android:layout_above="@+id/txt_digits"
-        android:text="Work now!"
+        android:text="@string/str_work_now"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     
      <TextView

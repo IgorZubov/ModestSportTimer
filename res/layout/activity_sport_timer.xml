@@ -104,7 +104,7 @@
                 android:layout_marginRight="45dp"
                 android:layout_marginTop="45dp"
                 android:background="@drawable/selector_btn_go"
-                android:text="GO!"
+                android:text="@string/str_go"
                 android:textSize="22sp"
                 android:typeface="monospace"
                 android:visibility="visible" />
