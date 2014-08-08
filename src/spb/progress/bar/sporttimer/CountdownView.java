@@ -86,7 +86,6 @@ public class CountdownView extends View {
 	    }
 	
 		m_animationHandler = new Handler() {
-
 			public void handleMessage(Message msg) {
 				invalidate();
 				long currentTime = System.currentTimeMillis();
@@ -130,7 +129,6 @@ public class CountdownView extends View {
 		m_restPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 		m_restPaint.setStyle(Style.STROKE);
 		m_restPaint.setStrokeWidth(m_nOuterWheelWidth);
-		
 		
 		m_activeSectorPaint.setColor(getResources().getColor(R.color.sector_remaining));
 		m_activeSectorPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
