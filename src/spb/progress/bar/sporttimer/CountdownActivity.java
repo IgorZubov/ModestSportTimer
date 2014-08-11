@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.TextView;
@@ -14,19 +14,21 @@ public class CountdownActivity extends Activity {
 	public static final int DEFAULT_BEEP_TIME_BEFORE_END = 2000;
 	public static final int DEFAULT_BEEP_TIME_DELTA = 1000;
 	public static final int DEFAULT_MINIMUM_FOR_BEEPING = 3000;
+	private int ShortBeep = 0;
+	private int LongBeep = 1;
 	private CountdownView m_countdownView;
 	private TextView m_txtTimeLeft;
 	private TextView m_txtRoundName;
 	private TimerTask m_timer;
-	private MediaPlayer m_ShortBeep;
-	private MediaPlayer m_LongBeep;
+	private SoundPool m_SoundPool;
+	
 	private boolean m_bOnlyInitialBeep;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setVolumeControlStream(AudioManager.STREAM_MUSIC);
+		setVolumeControlStream(AudioManager.STREAM_SYSTEM);
 		initBeepPlayer(getApplicationContext());
 		setContentView(R.layout.activity_countdown);
 		int roundsAmount = getIntent().getIntExtra(SportTimerActivity.ROUNDS_AMOUNT, 0);
@@ -50,8 +52,8 @@ public class CountdownActivity extends Activity {
 			@Override
 			public void onTick(long millisUntilFinished) {
 				if (millisUntilFinished < nBeepTimeMillisec) {
-					if (m_ShortBeep != null) {
-						m_ShortBeep.start();
+					if (m_SoundPool != null) {
+						m_SoundPool.play(ShortBeep, 1, 1, 0, 0, 1);
 						nBeepTimeMillisec -= DEFAULT_BEEP_TIME_DELTA;
 					}
 				}
@@ -59,8 +61,8 @@ public class CountdownActivity extends Activity {
 			
 			@Override
 			public void onFinish() {
-				if (m_LongBeep != null) {
-					m_LongBeep.start();
+				if (m_SoundPool != null) {
+					m_SoundPool.play(LongBeep, 1, 1, 0, 0, 1);
 					m_timer.startTimer();
 				}
 			}
@@ -69,18 +71,17 @@ public class CountdownActivity extends Activity {
 	}
 	
 	private void initBeepPlayer(Context context) {
-		m_ShortBeep = MediaPlayer.create(context,R.raw.beep_025sec);
-		m_LongBeep = MediaPlayer.create(context,R.raw.beep_05sec);
+		m_SoundPool = new SoundPool(2, AudioManager.STREAM_SYSTEM, 0);
+		ShortBeep = m_SoundPool.load(context, R.raw.beep_025sec, 1);
+		LongBeep = m_SoundPool.load(context, R.raw.beep_05sec, 1);
 	}
 	
 	@Override
 	protected void onDestroy() {
 		m_countdownView.stopTimer();
 		m_timer.stopTimers();
-		m_LongBeep.release();
-		m_LongBeep = null;
-		m_ShortBeep.release();
-		m_ShortBeep = null;
+		m_SoundPool.release();
+		m_SoundPool = null;
 		super.onDestroy();
 	}
 	
@@ -131,7 +132,7 @@ public class CountdownActivity extends Activity {
 						if (m_bStopTimer)
 							return;
 						m_nInternalBeepTimeMillisec = DEFAULT_BEEP_TIME_BEFORE_END;
-						m_LongBeep.start();
+						m_SoundPool.play(LongBeep, 1, 1, 0, 0, 1);
 						m_txtRoundName.setText(R.string.str_work_now);
 						startTimer();
 					}
@@ -143,7 +144,7 @@ public class CountdownActivity extends Activity {
 				if (m_bStopTimer)
 					return;
 				if (millisUntilFinished < m_nInternalBeepTimeMillisec && !m_bOnlyInitialBeep) {
-					m_ShortBeep.start();
+					m_SoundPool.play(ShortBeep, 1, 1, 0, 0, 1);
 					m_nInternalBeepTimeMillisec -= DEFAULT_BEEP_TIME_DELTA;
 				}
 			}
@@ -162,7 +163,7 @@ public class CountdownActivity extends Activity {
 			public void onFinish() {
 				if (m_bStopTimer)
 					return;
-				m_LongBeep.start();
+				m_SoundPool.play(LongBeep, 1, 1, 0, 0, 1);
 				m_nInternalBeepTimeMillisec = DEFAULT_BEEP_TIME_BEFORE_END;
 				m_nRoundsAmount--;
 				m_countdownView.setPauseState(true);
